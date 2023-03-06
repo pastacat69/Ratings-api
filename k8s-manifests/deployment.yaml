@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  ratings-api
+  labels:
+    app:  ratings-api
+spec:
+  selector:
+    matchLabels:
+      app: ratings-api
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app:  ratings-api
+    spec:
+      containers:
+      - name:  ratings-api
+        image:  ratings-api:1.0
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "K8s"
+        ports:
+        - containerPort:  80
+          name:  http
+      restartPolicy: Always
